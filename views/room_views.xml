@@ -41,6 +41,7 @@
                                 <field name="residence_id"/>
                                 <field name="tipo"/>
                                 <field name="planta"/>
+                                <field name="state" string="Estado de la Habitación"/>
                             </group>
 
                             <group string="Ocupación" col="2">

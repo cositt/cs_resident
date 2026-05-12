@@ -37,6 +37,7 @@
                             <group string="Información General" col="2">
                                 <field name="code"/>
                                 <field name="capacidad_total"/>
+                                <field name="state" string="Estado de la Residencia"/>
                             </group>
 
                             <group string="Ubicación" col="2">

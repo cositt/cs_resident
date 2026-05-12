@@ -44,6 +44,7 @@
                                 <field name="phone"/>
                                 <field name="fecha_nacimiento"/>
                                 <field name="edad"/>
+                                <field name="state" string="Estado del Residente"/>
                             </group>
 
                             <group string="Ubicación del Residente" col="2">
