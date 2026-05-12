@@ -4,7 +4,7 @@
     'category': 'Healthcare',
     'author': 'Equilibrium',
     'license': 'LGPL-3',
-    'depends': ['base', 'mail'],
+    'depends': ['base', 'mail', 'cs_purse_pocket'],
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',

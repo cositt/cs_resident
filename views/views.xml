@@ -47,7 +47,10 @@
                             </group>
 
                             <group string="Datos Económicos" col="2">
-                                <field name="saldo"/>
+                                <field name="tiene_wallet" invisible="1"/>
+                                <field name="wallet_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="saldo" attrs="{'invisible': [('tiene_wallet', '=', False)]}" readonly="1"/>
                             </group>
                         </group>
 

@@ -35,7 +35,32 @@ class Resident(models.Model):
         tracking=True
     )
     
-    saldo = fields.Float(string='Saldo (€)', default=0.0, tracking=True)
+    # WALLET Y DATOS ECONÓMICOS
+    wallet_id = fields.Many2one(
+        'patient.wallet.account',
+        string='Cartera del Paciente',
+        compute='_compute_wallet_id',
+        store=False,
+        help='Cartera del paciente vinculada'
+    )
+    tiene_wallet = fields.Boolean(
+        string='¿Tiene Cartera?',
+        compute='_compute_tiene_wallet',
+        store=False
+    )
+    saldo = fields.Monetary(
+        string='Saldo (€)',
+        compute='_compute_saldo',
+        store=False,
+        currency_field='currency_id',
+        help='Saldo actual de la cartera'
+    )
+    currency_id = fields.Many2one(
+        'res.currency',
+        string='Moneda',
+        default=lambda self: self.env.company.currency_id
+    )
+    
     notas = fields.Text(string='Notas')
 
     @api.depends('fecha_nacimiento')
@@ -49,6 +74,34 @@ class Resident(models.Model):
                     residente.edad -= 1
             else:
                 residente.edad = 0
+
+    @api.depends('partner_id')
+    def _compute_wallet_id(self):
+        """Obtiene la cartera del paciente si existe"""
+        for residente in self:
+            if residente.partner_id:
+                wallet = self.env['patient.wallet.account'].search([
+                    ('patient_id', '=', residente.partner_id.id),
+                    ('active', '=', True)
+                ], limit=1)
+                residente.wallet_id = wallet.id if wallet else False
+            else:
+                residente.wallet_id = False
+
+    @api.depends('wallet_id')
+    def _compute_tiene_wallet(self):
+        """Verifica si el residente tiene wallet"""
+        for residente in self:
+            residente.tiene_wallet = bool(residente.wallet_id)
+
+    @api.depends('wallet_id')
+    def _compute_saldo(self):
+        """Obtiene el saldo de la wallet si existe"""
+        for residente in self:
+            if residente.wallet_id:
+                residente.saldo = residente.wallet_id.balance
+            else:
+                residente.saldo = 0.0
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
