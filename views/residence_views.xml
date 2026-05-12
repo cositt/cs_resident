@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- VISTA LIST PARA RESIDENCIAS -->
+        <record id="residence_view_list" model="ir.ui.view">
+            <field name="name">cs.residence.list</field>
+            <field name="model">cs.residence</field>
+            <field name="arch" type="xml">
+                <list string="Residencias">
+                    <field name="name" string="Nombre"/>
+                    <field name="code" string="Código"/>
+                    <field name="ciudad" string="Ciudad"/>
+                    <field name="capacidad_total" string="Capacidad"/>
+                    <field name="active" string="Activa"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- VISTA FORM PARA RESIDENCIAS -->
+        <record id="residence_view_form" model="ir.ui.view">
+            <field name="name">cs.residence.form</field>
+            <field name="model">cs.residence</field>
+            <field name="arch" type="xml">
+                <form string="Residencia">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Nombre de Residencia"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group string="Información General" col="2">
+                                <field name="code"/>
+                                <field name="capacidad_total"/>
+                                <field name="active"/>
+                            </group>
+
+                            <group string="Ubicación" col="2">
+                                <field name="direccion"/>
+                                <field name="ciudad"/>
+                                <field name="codigo_postal"/>
+                                <field name="provincia"/>
+                                <field name="pais"/>
+                            </group>
+
+                            <group string="Contacto" col="2">
+                                <field name="telefono"/>
+                                <field name="email"/>
+                            </group>
+                        </group>
+
+                        <group string="Habitaciones">
+                            <field name="room_ids" nolabel="1">
+                                <list string="Habitaciones" create="true" edit="true" delete="true">
+                                    <field name="name" string="Número"/>
+                                    <field name="tipo" string="Tipo"/>
+                                    <field name="planta" string="Planta"/>
+                                    <field name="capacidad" string="Capacidad"/>
+                                    <field name="ocupados" string="Ocupados"/>
+                                    <field name="disponibles" string="Disponibles"/>
+                                    <field name="state" string="Estado"/>
+                                </list>
+                            </field>
+                        </group>
+
+                        <group string="Notas" col="1">
+                            <field name="notas" nolabel="1" placeholder="Notas sobre la residencia..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- VISTA SEARCH PARA RESIDENCIAS -->
+        <record id="residence_view_search" model="ir.ui.view">
+            <field name="name">cs.residence.search</field>
+            <field name="model">cs.residence</field>
+            <field name="arch" type="xml">
+                <search string="Residencias">
+                    <field name="name" string="Nombre"/>
+                    <field name="code" string="Código"/>
+                    <field name="ciudad" string="Ciudad"/>
+                    <separator/>
+                    <filter name="filter_activas" string="Activas" domain="[('active', '=', True)]"/>
+                    <filter name="filter_inactivas" string="Inactivas" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- ACCIÓN PARA RESIDENCIAS -->
+        <record id="residence_action" model="ir.actions.act_window">
+            <field name="name">Residencias</field>
+            <field name="res_model">cs.residence</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Cree la primera residencia
+                </p>
+            </field>
+        </record>
+
+        <!-- MENÚ PARA RESIDENCIAS -->
+        <menuitem id="cs_menu_residence" parent="cs_menu" name="Residencias" action="residence_action" sequence="20"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- VISTA LIST PARA HABITACIONES -->
+        <record id="room_view_list" model="ir.ui.view">
+            <field name="name">cs.room.list</field>
+            <field name="model">cs.room</field>
+            <field name="arch" type="xml">
+                <list string="Habitaciones">
+                    <field name="residence_id" string="Residencia"/>
+                    <field name="name" string="Número"/>
+                    <field name="tipo" string="Tipo"/>
+                    <field name="planta" string="Planta"/>
+                    <field name="capacidad" string="Capacidad"/>
+                    <field name="ocupados" string="Ocupados"/>
+                    <field name="disponibles" string="Disponibles"/>
+                    <field name="state" string="Estado"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- VISTA FORM PARA HABITACIONES -->
+        <record id="room_view_form" model="ir.ui.view">
+            <field name="name">cs.room.form</field>
+            <field name="model">cs.room</field>
+            <field name="arch" type="xml">
+                <form string="Habitación">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Número de Habitación"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group string="Información General" col="2">
+                                <field name="residence_id"/>
+                                <field name="tipo"/>
+                                <field name="planta"/>
+                                <field name="active"/>
+                            </group>
+
+                            <group string="Ocupación" col="2">
+                                <field name="capacidad"/>
+                                <field name="ocupados" readonly="1"/>
+                                <field name="disponibles" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <group string="Residentes">
+                            <field name="resident_ids" nolabel="1" readonly="1">
+                                <list string="Residentes">
+                                    <field name="name" string="Nombre"/>
+                                    <field name="dni" string="DNI"/>
+                                    <field name="state" string="Estado"/>
+                                </list>
+                            </field>
+                        </group>
+
+                        <group string="Notas" col="1">
+                            <field name="notas" nolabel="1" placeholder="Notas sobre la habitación..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- VISTA SEARCH PARA HABITACIONES -->
+        <record id="room_view_search" model="ir.ui.view">
+            <field name="name">cs.room.search</field>
+            <field name="model">cs.room</field>
+            <field name="arch" type="xml">
+                <search string="Habitaciones">
+                    <field name="name" string="Número"/>
+                    <field name="residence_id" string="Residencia"/>
+                    <field name="tipo" string="Tipo"/>
+                    <separator/>
+                    <filter name="filter_disponibles" string="Disponibles" domain="[('state', '=', 'disponible')]"/>
+                    <filter name="filter_ocupadas" string="Ocupadas" domain="[('state', '=', 'ocupada')]"/>
+                    <filter name="filter_mantenimiento" string="Mantenimiento" domain="[('state', '=', 'mantenimiento')]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- ACCIÓN PARA HABITACIONES -->
+        <record id="room_action" model="ir.actions.act_window">
+            <field name="name">Habitaciones</field>
+            <field name="res_model">cs.room</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Cree la primera habitación
+                </p>
+            </field>
+        </record>
+
+        <!-- MENÚ PARA HABITACIONES -->
+        <menuitem id="cs_menu_room" parent="cs_menu" name="Habitaciones" action="room_action" sequence="21"/>
+
+    </data>
+</odoo>

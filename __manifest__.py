@@ -8,6 +8,8 @@
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
+        'views/residence_views.xml',
+        'views/room_views.xml',
     ],
     'installable': True,
     'application': True,

@@ -46,6 +46,11 @@
                                 <field name="edad"/>
                             </group>
 
+                            <group string="Ubicación del Residente" col="2">
+                                <field name="residence_id"/>
+                                <field name="room_id" domain="[('residence_id', '=', residence_id)]"/>
+                            </group>
+
                             <group string="Datos Económicos" col="2" invisible="not tiene_wallet">
                                 <field name="tiene_wallet" invisible="1"/>
                                 <field name="wallet_id" invisible="1"/>

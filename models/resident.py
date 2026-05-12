@@ -22,6 +22,20 @@ class Resident(models.Model):
         help='Contacto vinculado como paciente'
     )
     
+    # UBICACIÓN DEL RESIDENTE
+    residence_id = fields.Many2one(
+        'cs.residence',
+        string='Residencia',
+        tracking=True,
+        help='Residencia donde se ubica el residente'
+    )
+    room_id = fields.Many2one(
+        'cs.room',
+        string='Habitación',
+        tracking=True,
+        help='Habitación asignada al residente'
+    )
+    
     # ESTADO Y SALDO
     state = fields.Selection(
         [
