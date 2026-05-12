@@ -60,6 +60,11 @@
                             </group>
                         </group>
 
+                        <group string="Trabajadores Asignados" col="1">
+                            <field name="worker_ids" nolabel="1" widget="many2many_tags">
+                            </field>
+                        </group>
+
                         <group string="Observaciones" col="1">
                             <field name="notas" nolabel="1" placeholder="Notas y observaciones..."/>
                         </group>

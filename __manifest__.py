@@ -10,6 +10,7 @@
         'views/views.xml',
         'views/residence_views.xml',
         'views/room_views.xml',
+        'views/worker_views.xml',
     ],
     'installable': True,
     'application': True,

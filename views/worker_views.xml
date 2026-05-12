@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- VISTA LIST PARA TRABAJADORES -->
+        <record id="worker_view_list" model="ir.ui.view">
+            <field name="name">cs.worker.list</field>
+            <field name="model">cs.worker</field>
+            <field name="arch" type="xml">
+                <list string="Trabajadores">
+                    <field name="name" string="Nombre"/>
+                    <field name="job_title" string="Puesto"/>
+                    <field name="phone" string="Teléfono"/>
+                    <field name="email" string="Email"/>
+                    <field name="state" string="Estado"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- VISTA FORM PARA TRABAJADORES -->
+        <record id="worker_view_form" model="ir.ui.view">
+            <field name="name">cs.worker.form</field>
+            <field name="model">cs.worker</field>
+            <field name="arch" type="xml">
+                <form string="Trabajador/Profesional">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Nombre Completo"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group string="Información del Contacto" col="2">
+                                <field name="partner_id" domain="[('is_company', '=', False)]" placeholder="Seleccionar contacto o crear nuevo"/>
+                                <field name="phone" readonly="1"/>
+                                <field name="email" readonly="1"/>
+                            </group>
+
+                            <group string="Puesto de Trabajo" col="2">
+                                <field name="job_title"/>
+                                <field name="otro_puesto" invisible="job_title != 'otro'"/>
+                                <field name="state" string="Estado del Trabajador"/>
+                            </group>
+                        </group>
+
+                        <group string="Asignaciones">
+                            <group string="Residencias" col="1">
+                                <field name="residence_ids" nolabel="1" widget="many2many_tags">
+                                </field>
+                            </group>
+                        </group>
+
+                        <group string="Residentes Asignados" col="1">
+                            <field name="resident_ids" nolabel="1">
+                                <list string="Residentes">
+                                    <field name="name" string="Nombre"/>
+                                    <field name="dni" string="DNI"/>
+                                    <field name="residence_id" string="Residencia"/>
+                                    <field name="room_id" string="Habitación"/>
+                                </list>
+                            </field>
+                        </group>
+
+                        <group string="Notas" col="1">
+                            <field name="notas" nolabel="1" placeholder="Notas sobre el trabajador..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- VISTA SEARCH PARA TRABAJADORES -->
+        <record id="worker_view_search" model="ir.ui.view">
+            <field name="name">cs.worker.search</field>
+            <field name="model">cs.worker</field>
+            <field name="arch" type="xml">
+                <search string="Trabajadores">
+                    <field name="name" string="Nombre"/>
+                    <field name="job_title" string="Puesto"/>
+                    <field name="residence_ids" string="Residencia"/>
+                    <separator/>
+                    <filter name="filter_activos" string="Activos" domain="[('state', '=', 'activo')]"/>
+                    <filter name="filter_inactivos" string="Inactivos" domain="[('state', '=', 'inactivo')]"/>
+                    <filter name="filter_psicologos" string="Psicólogos" domain="[('job_title', '=', 'psicólogo')]"/>
+                    <filter name="filter_enfermeros" string="Enfermeros" domain="[('job_title', '=', 'enfermero')]"/>
+                    <filter name="filter_medicos" string="Médicos" domain="[('job_title', '=', 'médico')]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- ACCIÓN PARA TRABAJADORES -->
+        <record id="worker_action" model="ir.actions.act_window">
+            <field name="name">Trabajadores</field>
+            <field name="res_model">cs.worker</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Cree el primer trabajador
+                </p>
+            </field>
+        </record>
+
+        <!-- MENÚ PARA TRABAJADORES -->
+        <menuitem id="cs_menu_worker" parent="cs_menu" name="Trabajadores" action="worker_action" sequence="30"/>
+
+    </data>
+</odoo>

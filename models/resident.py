@@ -36,6 +36,17 @@ class Resident(models.Model):
         help='Habitación asignada al residente'
     )
     
+    # TRABAJADORES ASIGNADOS
+    worker_ids = fields.Many2many(
+        'cs.worker',
+        'cs_worker_resident_rel',
+        'resident_id',
+        'worker_id',
+        string='Trabajadores Asignados',
+        tracking=True,
+        help='Trabajadores/Profesionales asignados a este residente'
+    )
+    
     # ESTADO Y SALDO
     state = fields.Selection(
         [
