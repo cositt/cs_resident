@@ -27,6 +27,11 @@
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
+                        <!-- SELECCIONAR CONTACTO O CREAR NUEVO -->
+                        <group string="Origen del Residente" col="1">
+                            <field name="partner_id" domain="[('category_id.name', 'ilike', 'Paciente')]" placeholder="Seleccionar contacto existente (etiqueta Paciente) O dejar vacío para crear nuevo"/>
+                        </group>
+
                         <div class="oe_title">
                             <h1>
                                 <field name="name" placeholder="Nombre Completo"/>
@@ -43,10 +48,6 @@
 
                             <group string="Datos Económicos" col="2">
                                 <field name="saldo"/>
-                            </group>
-
-                            <group string="Contacto" col="2">
-                                <field name="partner_id" domain="[('category_id.name', 'ilike', 'Paciente')]"/>
                             </group>
                         </group>
 

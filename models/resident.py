@@ -50,6 +50,21 @@ class Resident(models.Model):
             else:
                 residente.edad = 0
 
+    @api.onchange('partner_id')
+    def _onchange_partner_id(self):
+        """Al seleccionar un contacto, auto-completa los datos"""
+        if self.partner_id:
+            self.name = self.partner_id.name
+            self.phone = self.partner_id.phone or ''
+            if self.partner_id.ref:
+                self.dni = self.partner_id.ref
+            # Asegurarse que tiene etiqueta Paciente
+            category = self.env['res.partner.category'].search([('name', '=', 'Paciente')])
+            if not category:
+                category = self.env['res.partner.category'].create({'name': 'Paciente'})
+            if category not in self.partner_id.category_id:
+                self.partner_id.category_id = [(4, category.id)]
+
     @api.model_create_multi
     def create(self, vals_list):
         """Al crear residente, crea o vincula un contacto con etiqueta Paciente"""
