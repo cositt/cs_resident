@@ -65,7 +65,7 @@
                             </field>
                         </group>
 
-                        <group string="Observaciones" col="1">
+                        <group name="resident_notes_group" string="Observaciones" col="1">
                             <field name="notas" nolabel="1" placeholder="Notas y observaciones..."/>
                         </group>
                     </sheet>
