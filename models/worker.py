@@ -83,15 +83,13 @@ class Worker(models.Model):
     def _onchange_partner_id(self):
         """Auto-rellenar job_title basado en categorías del partner"""
         if self.partner_id:
-            # Mapeo de categorías a job_title
-            category_job_map = {
-                'psicólogo': 'psicólogo',
-                'psicóloga': 'psicólogo',
-                'enfermero': 'enfermero',
-                'enfermera': 'enfermero',
-                'médico': 'médico',
-                'médica': 'médico',
-                'fisioterapeuta': 'fisioterapeuta',
+            # Mapeo de palabras clave a job_title
+            keyword_job_map = {
+                'psic': 'psicólogo',
+                'enferm': 'enfermero',
+                'médic': 'médico',
+                'doctor': 'médico',
+                'fisio': 'fisioterapeuta',
                 'terapeuta': 'terapeuta',
                 'cuidador': 'cuidador',
                 'cuidadora': 'cuidador',
@@ -99,17 +97,22 @@ class Worker(models.Model):
                 'cocinera': 'cocinero',
                 'limpiador': 'limpiador',
                 'limpiadora': 'limpiador',
-                'administrativo': 'administrativo',
-                'administrativa': 'administrativo',
+                'administ': 'administrativo',
                 'director': 'director',
                 'directora': 'director',
             }
             
             # Buscar categorías del partner que coincidan
+            found = False
             for category in self.partner_id.category_id:
                 category_name = category.name.lower().strip()
-                if category_name in category_job_map:
-                    self.job_title = category_job_map[category_name]
+                # Buscar por palabra clave
+                for keyword, job in keyword_job_map.items():
+                    if keyword in category_name:
+                        self.job_title = job
+                        found = True
+                        break
+                if found:
                     break
 
     @api.onchange('job_title')
