@@ -72,7 +72,7 @@
                     <filter name="filter_activos" string="Activos" domain="[('state', '=', 'activo')]"/>
                     <filter name="filter_pausados" string="Pausados" domain="[('state', '=', 'pausado')]"/>
                     <filter name="filter_alta" string="Alta" domain="[('state', '=', 'alta')]"/>
-                    <filter name="filter_fallecidos" string="Fallecidos" domain="[('state', '=', 'fallecido')]"/>
+                    <filter name="filter_baja" string="Baja" domain="[('state', '=', 'baja')]"/>
                 </search>
             </field>
         </record>

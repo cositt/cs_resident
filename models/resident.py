@@ -28,7 +28,7 @@ class Resident(models.Model):
             ('activo', 'Activo'),
             ('pausado', 'Pausado'),
             ('alta', 'Alta'),
-            ('fallecido', 'Fallecido')
+            ('baja', 'Baja')
         ],
         string='Estado',
         default='activo',
