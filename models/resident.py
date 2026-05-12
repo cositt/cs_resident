@@ -14,6 +14,14 @@ class Resident(models.Model):
     edad = fields.Integer(string='Edad', compute='_compute_edad', store=False)
     phone = fields.Char(string='Teléfono')
     
+    # CONTACTO VINCULADO
+    partner_id = fields.Many2one(
+        'res.partner',
+        string='Contacto (Paciente)',
+        tracking=True,
+        help='Contacto vinculado como paciente'
+    )
+    
     # ESTADO Y SALDO
     state = fields.Selection(
         [
@@ -37,8 +45,29 @@ class Resident(models.Model):
             if residente.fecha_nacimiento:
                 hoy = datetime.now().date()
                 residente.edad = hoy.year - residente.fecha_nacimiento.year
-                # Ajustar si aún no ha cumplido años este año
                 if (hoy.month, hoy.day) < (residente.fecha_nacimiento.month, residente.fecha_nacimiento.day):
                     residente.edad -= 1
             else:
                 residente.edad = 0
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        """Al crear residente, crea o vincula un contacto con etiqueta Paciente"""
+        for vals in vals_list:
+            # Si no hay partner_id, crear uno automáticamente
+            if not vals.get('partner_id'):
+                # Obtener o crear la categoría "Paciente"
+                category = self.env['res.partner.category'].search([('name', '=', 'Paciente')])
+                if not category:
+                    category = self.env['res.partner.category'].create({'name': 'Paciente'})
+                
+                # Crear contacto con la etiqueta Paciente
+                partner = self.env['res.partner'].create({
+                    'name': vals.get('name', 'Sin nombre'),
+                    'ref': vals.get('dni', ''),
+                    'phone': vals.get('phone', ''),
+                    'category_id': [(6, 0, [category.id])],  # Asignar categoría Paciente
+                })
+                vals['partner_id'] = partner.id
+        
+        return super().create(vals_list)

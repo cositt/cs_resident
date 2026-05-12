@@ -44,6 +44,10 @@
                             <group string="Datos Económicos" col="2">
                                 <field name="saldo"/>
                             </group>
+
+                            <group string="Contacto" col="2">
+                                <field name="partner_id" domain="[('category_id.name', 'ilike', 'Paciente')]"/>
+                            </group>
                         </group>
 
                         <group string="Observaciones" col="1">
