@@ -24,35 +24,32 @@
             <field name="arch" type="xml">
                 <form string="Residente">
                     <header>
-                        <field name="state" widget="statusbar" options="{'clickable': False}"/>
+                        <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
-                        <!-- SECCIÓN: Información Personal -->
-                        <group string="Información Personal">
-                            <field name="name" placeholder="Nombre Completo"/>
-                            <field name="dni" placeholder="DNI/NIF"/>
-                            <field name="fecha_nacimiento"/>
-                            <field name="edad" readonly="1"/>
-                            <field name="phone" placeholder="Teléfono"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Nombre Completo"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group string="Datos Personales" col="2">
+                                <field name="dni"/>
+                                <field name="phone"/>
+                                <field name="fecha_nacimiento"/>
+                                <field name="edad"/>
+                            </group>
+
+                            <group string="Datos Económicos" col="2">
+                                <field name="saldo"/>
+                            </group>
                         </group>
 
-                        <!-- SECCIÓN: Información Económica -->
-                        <group string="Información Económica">
-                            <field name="saldo"/>
-                        </group>
-
-                        <!-- SECCIÓN: Notas -->
-                        <group string="Notas">
-                            <field name="notas" nolabel="1" placeholder="Escriba notas sobre el residente..."/>
+                        <group string="Observaciones" col="1">
+                            <field name="notas" nolabel="1" placeholder="Notas y observaciones..."/>
                         </group>
                     </sheet>
-
-                    <!-- CHATTER/HISTORIAL -->
-                    <div class="oe_chatter">
-                        <field name="message_follower_ids" widget="mail_followers"/>
-                        <field name="activity_ids" widget="mail_activity"/>
-                        <field name="message_ids" widget="mail_thread"/>
-                    </div>
                 </form>
             </field>
         </record>
