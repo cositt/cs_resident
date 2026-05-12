@@ -56,7 +56,10 @@ class Resident(models.Model):
         if self.partner_id:
             self.name = self.partner_id.name
             self.phone = self.partner_id.phone or ''
-            if self.partner_id.ref:
+            # Buscar DNI/NIF en el campo vat (que es el NIF en Odoo)
+            if self.partner_id.vat:
+                self.dni = self.partner_id.vat
+            elif self.partner_id.ref:
                 self.dni = self.partner_id.ref
             # Asegurarse que tiene etiqueta Paciente
             category = self.env['res.partner.category'].search([('name', '=', 'Paciente')])
@@ -79,7 +82,7 @@ class Resident(models.Model):
                 # Crear contacto con la etiqueta Paciente
                 partner = self.env['res.partner'].create({
                     'name': vals.get('name', 'Sin nombre'),
-                    'ref': vals.get('dni', ''),
+                    'vat': vals.get('dni', ''),  # Usar vat para DNI/NIF
                     'phone': vals.get('phone', ''),
                     'category_id': [(6, 0, [category.id])],  # Asignar categoría Paciente
                 })
