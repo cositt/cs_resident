@@ -79,6 +79,39 @@ class Worker(models.Model):
     
     _order = 'name'
 
+    @api.onchange('partner_id')
+    def _onchange_partner_id(self):
+        """Auto-rellenar job_title basado en categorías del partner"""
+        if self.partner_id:
+            # Mapeo de categorías a job_title
+            category_job_map = {
+                'psicólogo': 'psicólogo',
+                'psicóloga': 'psicólogo',
+                'enfermero': 'enfermero',
+                'enfermera': 'enfermero',
+                'médico': 'médico',
+                'médica': 'médico',
+                'fisioterapeuta': 'fisioterapeuta',
+                'terapeuta': 'terapeuta',
+                'cuidador': 'cuidador',
+                'cuidadora': 'cuidador',
+                'cocinero': 'cocinero',
+                'cocinera': 'cocinero',
+                'limpiador': 'limpiador',
+                'limpiadora': 'limpiador',
+                'administrativo': 'administrativo',
+                'administrativa': 'administrativo',
+                'director': 'director',
+                'directora': 'director',
+            }
+            
+            # Buscar categorías del partner que coincidan
+            for category in self.partner_id.category_id:
+                category_name = category.name.lower().strip()
+                if category_name in category_job_map:
+                    self.job_title = category_job_map[category_name]
+                    break
+
     @api.onchange('job_title')
     def _onchange_job_title(self):
         """Limpiar otro_puesto si cambia el puesto seleccionado"""
