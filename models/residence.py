@@ -16,7 +16,17 @@ class Residence(models.Model):
     telefono = fields.Char(string='Teléfono')
     email = fields.Char(string='Email')
     capacidad_total = fields.Integer(string='Capacidad Total')
-    active = fields.Boolean(default=True, string='Activa')
+    state = fields.Selection(
+        [
+            ('activa', 'Activa'),
+            ('inactiva', 'Inactiva'),
+            ('mantenimiento', 'Mantenimiento'),
+            ('cerrada', 'Cerrada'),
+        ],
+        string='Estado',
+        default='activa',
+        tracking=True
+    )
     notas = fields.Text(string='Notas')
     
     # Relación con habitaciones

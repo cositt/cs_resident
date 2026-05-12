@@ -27,12 +27,12 @@ class Room(models.Model):
             ('disponible', 'Disponible'),
             ('ocupada', 'Ocupada'),
             ('mantenimiento', 'Mantenimiento'),
+            ('cerrada', 'Cerrada'),
         ],
         string='Estado',
         default='disponible',
         tracking=True
     )
-    active = fields.Boolean(default=True, string='Activa')
     notas = fields.Text(string='Notas')
     
     # Relación con residentes

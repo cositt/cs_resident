@@ -41,7 +41,6 @@
                                 <field name="residence_id"/>
                                 <field name="tipo"/>
                                 <field name="planta"/>
-                                <field name="active"/>
                             </group>
 
                             <group string="Ocupación" col="2">

@@ -12,7 +12,7 @@
                     <field name="code" string="Código"/>
                     <field name="ciudad" string="Ciudad"/>
                     <field name="capacidad_total" string="Capacidad"/>
-                    <field name="active" string="Activa"/>
+                    <field name="state" string="Estado"/>
                 </list>
             </field>
         </record>
@@ -23,6 +23,9 @@
             <field name="model">cs.residence</field>
             <field name="arch" type="xml">
                 <form string="Residencia">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
                     <sheet>
                         <div class="oe_title">
                             <h1>
@@ -34,7 +37,6 @@
                             <group string="Información General" col="2">
                                 <field name="code"/>
                                 <field name="capacidad_total"/>
-                                <field name="active"/>
                             </group>
 
                             <group string="Ubicación" col="2">
@@ -82,9 +84,11 @@
                     <field name="name" string="Nombre"/>
                     <field name="code" string="Código"/>
                     <field name="ciudad" string="Ciudad"/>
+                    <field name="state" string="Estado"/>
                     <separator/>
-                    <filter name="filter_activas" string="Activas" domain="[('active', '=', True)]"/>
-                    <filter name="filter_inactivas" string="Inactivas" domain="[('active', '=', False)]"/>
+                    <filter name="filter_activas" string="Activas" domain="[('state', '=', 'activa')]"/>
+                    <filter name="filter_inactivas" string="Inactivas" domain="[('state', '=', 'inactiva')]"/>
+                    <filter name="filter_mantenimiento" string="Mantenimiento" domain="[('state', '=', 'mantenimiento')]"/>
                 </search>
             </field>
         </record>
