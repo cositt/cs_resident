@@ -1,6 +1,6 @@
 {
     'name': 'Centro Sanitario - Residentes',
-    'version': '1.0.0',
+    'version': '1.0.5',
     'category': 'Healthcare',
     'author': 'Equilibrium',
     'license': 'LGPL-3',

@@ -1,4 +1,5 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 from datetime import datetime
 
 
@@ -9,7 +10,7 @@ class Resident(models.Model):
 
     # INFORMACIÓN BÁSICA
     name = fields.Char(string='Nombre Completo', required=True, tracking=True)
-    dni = fields.Char(string='DNI/NIF', required=True, unique=True, tracking=True)
+    dni = fields.Char(string='DNI/NIF', required=True, tracking=True)
     fecha_nacimiento = fields.Date(string='Fecha de Nacimiento', required=True, tracking=True)
     edad = fields.Integer(string='Edad', compute='_compute_edad', store=False)
     phone = fields.Char(string='Teléfono')
@@ -145,6 +146,15 @@ class Resident(models.Model):
                 category = self.env['res.partner.category'].create({'name': 'Paciente'})
             if category not in self.partner_id.category_id:
                 self.partner_id.category_id = [(4, category.id)]
+
+    @api.constrains('dni')
+    def _check_resident_dni_unique(self):
+        for rec in self:
+            if not rec.dni:
+                continue
+            dup = self.search_count([('dni', '=', rec.dni), ('id', '!=', rec.id)])
+            if dup:
+                raise ValidationError(_('El DNI/NIF del residente debe ser único.'))
 
     @api.model_create_multi
     def create(self, vals_list):

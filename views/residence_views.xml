@@ -54,6 +54,27 @@
                             </group>
                         </group>
 
+                        <group string="Planos y documentación" col="1">
+                            <div class="text-muted mb-2" invisible="not id">
+                                Planos, mapas o normativa: abra el listado con el botón (los archivos quedan vinculados a esta residencia). También puede usar el chatter a la derecha («Registrar una nota» + clip).
+                            </div>
+                            <div class="alert alert-warning mb-2" role="alert" invisible="id">
+                                Guarde la ficha para poder vincular archivos a esta residencia.
+                            </div>
+                            <button
+                                name="action_open_residence_attachments"
+                                type="object"
+                                string="Abrir archivos y planos"
+                                class="btn-primary"
+                                colspan="2"
+                                invisible="not id"
+                            />
+                            <div class="text-muted" invisible="not id">
+                                Archivos vinculados:
+                                <field name="attachment_count" readonly="1" nolabel="1" class="d-inline"/>
+                            </div>
+                        </group>
+
                         <group string="Habitaciones">
                             <field name="room_ids" nolabel="1">
                                 <list string="Habitaciones" create="true" edit="true" delete="true">
@@ -72,6 +93,7 @@
                             <field name="notas" nolabel="1" placeholder="Notas sobre la residencia..."/>
                         </group>
                     </sheet>
+                    <chatter/>
                 </form>
             </field>
         </record>
