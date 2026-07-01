@@ -44,6 +44,8 @@
                                 <field name="phone"/>
                                 <field name="fecha_nacimiento"/>
                                 <field name="edad"/>
+                                <field name="weight_kg"/>
+                                <field name="height_cm"/>
                                 <field name="state" string="Estado del Residente"/>
                             </group>
 

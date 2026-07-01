@@ -87,6 +87,9 @@ class Resident(models.Model):
         default=lambda self: self.env.company.currency_id
     )
     
+    weight_kg = fields.Float(string='Peso (kg)', digits=(5, 1))
+    height_cm = fields.Float(string='Altura (cm)', digits=(5, 1))
+
     notas = fields.Text(string='Notas')
 
     @api.depends('fecha_nacimiento')

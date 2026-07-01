@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_resident_link" model="ir.ui.view">
+        <field name="name">res.partner.form.resident.link</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_create_or_open_resident"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-user-md"
+                        invisible="resident_count &gt; 0">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Crear residente</span>
+                    </div>
+                </button>
+                <button name="action_create_or_open_resident"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-user-md"
+                        invisible="resident_count == 0">
+                    <field name="resident_count" widget="statinfo" string="Residente"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>
