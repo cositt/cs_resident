@@ -92,6 +92,31 @@ class Resident(models.Model):
 
     notas = fields.Text(string='Notas')
 
+    # PERIODOS DE TRATAMIENTO
+    stay_ids = fields.One2many(
+        'cs.resident.stay',
+        'resident_id',
+        string='Periodos de Tratamiento',
+    )
+    current_stay_id = fields.Many2one(
+        'cs.resident.stay',
+        string='Periodo Actual',
+        compute='_compute_current_stay',
+        store=True,
+    )
+    current_stay_tipo = fields.Selection(
+        related='current_stay_id.tipo',
+        string='Modalidad Actual',
+        store=True,
+    )
+
+    @api.depends('stay_ids.fecha_fin', 'stay_ids.fecha_inicio')
+    def _compute_current_stay(self):
+        """El periodo actual es el más reciente sin fecha de fin (abierto)."""
+        for residente in self:
+            abiertos = residente.stay_ids.filtered(lambda s: not s.fecha_fin)
+            residente.current_stay_id = abiertos[:1]
+
     @api.depends('fecha_nacimiento')
     def _compute_edad(self):
         """Calcula la edad automáticamente"""

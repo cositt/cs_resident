@@ -13,6 +13,7 @@ class Room(models.Model):
             ('individual', 'Individual'),
             ('doble', 'Doble'),
             ('triple', 'Triple'),
+            ('suite', 'Suite'),
         ],
         string='Tipo de Habitación',
         required=True,

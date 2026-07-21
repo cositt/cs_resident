@@ -1,5 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_resident,Resident Access,model_cs_resident,base.group_user,1,1,1,0
+access_resident_stay,Resident Stay Access,model_cs_resident_stay,base.group_user,1,1,1,1
 access_residence,Residence Access,model_cs_residence,base.group_user,1,1,1,0
 access_room,Room Access,model_cs_room,base.group_user,1,1,1,0
 access_worker,Worker Access,model_cs_worker,base.group_user,1,1,1,0
