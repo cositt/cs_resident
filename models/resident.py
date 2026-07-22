@@ -194,7 +194,7 @@ class Resident(models.Model):
                 category = self.env['res.partner.category'].search([('name', '=', 'Paciente')])
                 if not category:
                     category = self.env['res.partner.category'].create({'name': 'Paciente'})
-                
+
                 # Crear contacto con la etiqueta Paciente
                 partner = self.env['res.partner'].create({
                     'name': vals.get('name', 'Sin nombre'),
@@ -203,5 +203,36 @@ class Resident(models.Model):
                     'category_id': [(6, 0, [category.id])],  # Asignar categoría Paciente
                 })
                 vals['partner_id'] = partner.id
-        
-        return super().create(vals_list)
+
+        residentes = super().create(vals_list)
+        for residente in residentes:
+            if residente.room_id:
+                self.env['cs.resident.stay'].create({
+                    'resident_id': residente.id,
+                    'residence_id': residente.residence_id.id,
+                    'room_id': residente.room_id.id,
+                })
+        return residentes
+
+    def write(self, vals):
+        """Al cambiar la habitación/residencia, registra el movimiento en cs.resident.stay"""
+        residentes_con_cambio = self.env['cs.resident']
+        if 'room_id' in vals or 'residence_id' in vals:
+            residentes_con_cambio = self.filtered(
+                lambda r: r.room_id.id != vals.get('room_id', r.room_id.id)
+                or r.residence_id.id != vals.get('residence_id', r.residence_id.id)
+            )
+        result = super().write(vals)
+        for residente in residentes_con_cambio:
+            if residente.room_id:
+                self.env['cs.resident.stay'].create({
+                    'resident_id': residente.id,
+                    'residence_id': residente.residence_id.id,
+                    'room_id': residente.room_id.id,
+                })
+            else:
+                self.env['cs.resident.stay'].search([
+                    ('resident_id', '=', residente.id),
+                    ('fecha_fin', '=', False),
+                ]).write({'fecha_fin': fields.Date.context_today(residente)})
+        return result

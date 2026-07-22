@@ -73,13 +73,16 @@
                         </group>
 
                         <notebook>
-                            <page string="Periodos de Tratamiento" name="stay_ids">
+                            <page string="Historial de Habitaciones" name="stay_ids">
                                 <field name="stay_ids">
-                                    <list string="Periodos de Tratamiento" editable="bottom">
-                                        <field name="tipo" string="Modalidad"/>
+                                    <list string="Historial de Habitaciones" editable="bottom" create="0">
+                                        <field name="residence_id" string="Residencia"/>
+                                        <field name="room_id" string="Habitación"/>
                                         <field name="fecha_inicio" string="Fecha Inicio"/>
                                         <field name="fecha_fin" string="Fecha Fin"/>
-                                        <field name="notas" string="Notas"/>
+                                        <field name="dias" string="Días"/>
+                                        <field name="tipo" string="Modalidad" optional="hide"/>
+                                        <field name="notas" string="Notas" optional="hide"/>
                                     </list>
                                 </field>
                             </page>

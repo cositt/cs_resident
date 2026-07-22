@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="resident_stay_view_list" model="ir.ui.view">
+            <field name="name">cs.resident.stay.list</field>
+            <field name="model">cs.resident.stay</field>
+            <field name="arch" type="xml">
+                <list string="Historial de Habitaciones" default_order="fecha_inicio desc" create="0">
+                    <field name="resident_id" string="Residente"/>
+                    <field name="residence_id" string="Residencia"/>
+                    <field name="room_id" string="Habitación"/>
+                    <field name="fecha_inicio" string="Fecha Inicio"/>
+                    <field name="fecha_fin" string="Fecha Fin"/>
+                    <field name="dias" string="Días" sum="Total"/>
+                    <field name="tipo" string="Modalidad" optional="hide"/>
+                    <field name="notas" string="Notas" optional="hide"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="resident_stay_view_form" model="ir.ui.view">
+            <field name="name">cs.resident.stay.form</field>
+            <field name="model">cs.resident.stay</field>
+            <field name="arch" type="xml">
+                <form string="Periodo de Ingreso" create="0">
+                    <sheet>
+                        <group>
+                            <field name="resident_id"/>
+                            <field name="residence_id"/>
+                            <field name="room_id"/>
+                            <field name="fecha_inicio"/>
+                            <field name="fecha_fin"/>
+                            <field name="dias"/>
+                            <field name="tipo"/>
+                        </group>
+                        <group string="Notas" col="1">
+                            <field name="notas" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="resident_stay_view_search" model="ir.ui.view">
+            <field name="name">cs.resident.stay.search</field>
+            <field name="model">cs.resident.stay</field>
+            <field name="arch" type="xml">
+                <search string="Historial de Habitaciones">
+                    <field name="resident_id" string="Residente"/>
+                    <field name="residence_id" string="Residencia"/>
+                    <field name="room_id" string="Habitación"/>
+                    <field name="tipo" string="Modalidad"/>
+                    <field name="fecha_inicio" string="Fecha Inicio"/>
+                    <field name="fecha_fin" string="Fecha Fin"/>
+                    <separator/>
+                    <filter name="filter_abiertos" string="Abiertos (sin fecha fin)" domain="[('fecha_fin', '=', False)]"/>
+                    <separator/>
+                    <filter name="filter_hotel" string="Hotel" domain="[('tipo', '=', 'hotel')]"/>
+                    <filter name="filter_piso" string="Piso" domain="[('tipo', '=', 'piso')]"/>
+                    <filter name="filter_consulta_online" string="Consulta Online" domain="[('tipo', '=', 'consulta_online')]"/>
+                    <filter name="filter_otro" string="Otro" domain="[('tipo', '=', 'otro')]"/>
+                    <group>
+                        <filter name="groupby_residente" string="Residente" context="{'group_by': 'resident_id'}"/>
+                        <filter name="groupby_residencia" string="Residencia" context="{'group_by': 'residence_id'}"/>
+                        <filter name="groupby_habitacion" string="Habitación" context="{'group_by': 'room_id'}"/>
+                        <filter name="groupby_modalidad" string="Modalidad" context="{'group_by': 'tipo'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="resident_stay_action" model="ir.actions.act_window">
+            <field name="name">Historial de Habitaciones</field>
+            <field name="res_model">cs.resident.stay</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="resident_stay_view_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Sin periodos de ingreso registrados
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="cs_menu_resident_stay" parent="cs_menu" name="Historial de Habitaciones" action="resident_stay_action" sequence="20"/>
+
+    </data>
+</odoo>
