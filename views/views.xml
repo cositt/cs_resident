@@ -55,6 +55,14 @@
                                 <field name="current_stay_tipo" string="Modalidad Actual" readonly="1"/>
                             </group>
 
+                            <group string="Condiciones del contrato" col="2">
+                                <field name="precio_mensual"/>
+                                <field name="dia_cobro"/>
+                                <field name="banco"/>
+                                <field name="fecha_salida_prevista"/>
+                                <field name="otro_alcance"/>
+                            </group>
+
                             <group string="Datos Económicos" col="2" invisible="not tiene_wallet">
                                 <field name="tiene_wallet" invisible="1"/>
                                 <field name="wallet_id" invisible="1"/>
@@ -73,6 +81,22 @@
                         </group>
 
                         <notebook>
+                            <page string="Personas del contrato" name="contact_ids">
+                                <field name="contact_ids">
+                                    <list editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="role"/>
+                                        <field name="name"/>
+                                        <field name="dni" optional="show"/>
+                                        <field name="street" optional="hide"/>
+                                        <field name="city" optional="hide"/>
+                                        <field name="relationship" optional="show"/>
+                                        <field name="phone" optional="show"/>
+                                        <field name="email" optional="show"/>
+                                        <field name="iban" optional="show" string="IBAN (solo titular)"/>
+                                    </list>
+                                </field>
+                            </page>
                             <page string="Historial de Habitaciones" name="stay_ids">
                                 <field name="stay_ids">
                                     <list string="Historial de Habitaciones" editable="bottom" create="0">
