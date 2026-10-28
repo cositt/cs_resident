@@ -92,6 +92,18 @@ class Resident(models.Model):
 
     notas = fields.Text(string='Notas')
 
+    # CONDICIONES DEL CONTRATO (se imprimen en los documentos del paciente)
+    precio_mensual = fields.Monetary(
+        string='Precio mensual', currency_field='currency_id', tracking=True,
+    )
+    dia_cobro = fields.Integer(string='Día de cobro', tracking=True)
+    banco = fields.Char(string='Banco', tracking=True)
+    fecha_salida_prevista = fields.Date(string='Fecha de salida prevista', tracking=True)
+    otro_alcance = fields.Text(string='Otro alcance del servicio')
+    contact_ids = fields.One2many(
+        'cs.resident.contact', 'resident_id', string='Personas del contrato',
+    )
+
     # PERIODOS DE TRATAMIENTO
     stay_ids = fields.One2many(
         'cs.resident.stay',
@@ -174,6 +186,12 @@ class Resident(models.Model):
                 category = self.env['res.partner.category'].create({'name': 'Paciente'})
             if category not in self.partner_id.category_id:
                 self.partner_id.category_id = [(4, category.id)]
+
+    @api.constrains('dia_cobro')
+    def _check_dia_cobro(self):
+        for rec in self:
+            if rec.dia_cobro and not 1 <= rec.dia_cobro <= 31:
+                raise ValidationError(_('El día de cobro debe estar entre 1 y 31.'))
 
     @api.constrains('dni')
     def _check_resident_dni_unique(self):

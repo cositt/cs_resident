@@ -4,3 +4,4 @@ access_resident_stay,Resident Stay Access,model_cs_resident_stay,base.group_user
 access_residence,Residence Access,model_cs_residence,base.group_user,1,1,1,0
 access_room,Room Access,model_cs_room,base.group_user,1,1,1,0
 access_worker,Worker Access,model_cs_worker,base.group_user,1,1,1,0
+access_resident_contact,Resident Contact Access,model_cs_resident_contact,base.group_user,1,1,1,1
