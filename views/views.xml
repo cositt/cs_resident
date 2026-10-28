@@ -29,7 +29,7 @@
                     <sheet>
                         <!-- SELECCIONAR CONTACTO O CREAR NUEVO -->
                         <group string="Origen del Residente" col="1">
-                            <field name="partner_id" domain="[('category_id.name', 'ilike', 'Paciente')]" placeholder="Seleccionar contacto existente (etiqueta Paciente) O dejar vacío para crear nuevo"/>
+                            <field name="partner_id" domain="[('is_company', '=', False), ('resident_ids', '=', False)]" placeholder="Seleccionar un contacto existente o dejar vacío para crear uno nuevo"/>
                         </group>
 
                         <div class="oe_title">
