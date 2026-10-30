@@ -14,6 +14,7 @@ class Resident(models.Model):
     fecha_nacimiento = fields.Date(string='Fecha de Nacimiento', required=True, tracking=True)
     edad = fields.Integer(string='Edad', compute='_compute_edad', store=False)
     phone = fields.Char(string='Teléfono')
+    active = fields.Boolean(string='Activo', default=True, tracking=True)
     
     # CONTACTO VINCULADO
     partner_id = fields.Many2one(
