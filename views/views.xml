@@ -27,6 +27,8 @@
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
+                        <widget name="web_ribbon" title="Archivado" bg_color="text-bg-danger" invisible="active"/>
+                        <field name="active" invisible="1"/>
                         <!-- SELECCIONAR CONTACTO O CREAR NUEVO -->
                         <group string="Origen del Residente" col="1">
                             <field name="partner_id" domain="[('is_company', '=', False), ('resident_ids', '=', False)]" placeholder="Seleccionar un contacto existente o dejar vacío para crear uno nuevo"/>
@@ -131,6 +133,8 @@
                     <filter name="filter_pausados" string="Pausados" domain="[('state', '=', 'pausado')]"/>
                     <filter name="filter_alta" string="Alta" domain="[('state', '=', 'alta')]"/>
                     <filter name="filter_baja" string="Baja" domain="[('state', '=', 'baja')]"/>
+                    <separator/>
+                    <filter name="filter_archived" string="Archivados" domain="[('active', '=', False)]"/>
                 </search>
             </field>
         </record>
