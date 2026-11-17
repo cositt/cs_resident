@@ -95,6 +95,7 @@
                                         <field name="relationship" optional="show"/>
                                         <field name="phone" optional="show"/>
                                         <field name="email" optional="show"/>
+                                        <field name="info_authorized" string="Autorizado info." widget="boolean_toggle"/>
                                         <field name="iban" optional="show" string="IBAN (solo titular)"/>
                                     </list>
                                 </field>
