@@ -34,6 +34,10 @@ class ResidentContact(models.Model):
     phone = fields.Char(string='Teléfono')
     email = fields.Char(string='Email')
     iban = fields.Char(string='IBAN')
+    info_authorized = fields.Boolean(
+        string='Autorizado a recibir información',
+        help='La persona puede recibir información sobre el residente (consta en el contrato).',
+    )
 
     @api.model_create_multi
     def create(self, vals_list):
