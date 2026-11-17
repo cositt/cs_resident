@@ -1,7 +1,10 @@
 from odoo.exceptions import AccessError
-from odoo.tests.common import TransactionCase, new_test_user
+from odoo.tests.common import TransactionCase, tagged, new_test_user
 
 
+# post_install: in a copy of production some company-dependent partner columns
+# (e.g. group_rfq) are only filled once every module is loaded.
+@tagged('post_install', '-at_install')
 class TestResidentArchive(TransactionCase):
 
     @classmethod
